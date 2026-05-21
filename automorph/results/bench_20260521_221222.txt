@@ -1,0 +1,64 @@
+# automorph benchmark
+# date: Thu May 21 22:12:22 CST 2026
+# git: e9995d6
+# gem5: Usage
+# binary: automorph/bin/bench_automorph
+# VLEN: 512, O3CPU, 1GHz
+
+Global frequency set at 1000000000000 ticks per second
+warn: No dot file generated. Please install pydot to generate the dot file and pdf.
+src/arch/riscv/isa.cc:279: info: RVV enabled, VLEN = 512 bits, ELEN = 64 bits
+src/base/statistics.hh:279: warn: One of the stats is a legacy stat. Legacy stat is a stat that does not belong to any statistics::Group. Legacy stat is deprecated.
+src/base/remote_gdb.cc:418: warn: Sockets disabled, not accepting gdb connections
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 24.1.0.2
+gem5 compiled Apr 10 2026 01:05:53
+gem5 started May 21 2026 22:12:31
+gem5 executing on LAPTOP-HR13M6SP, pid 39851
+command line: /home/derleere/gem5.opt /home/derleere/NTT-RVV-project/gem5-model/main.py /home/derleere/NTT-RVV-project/automorph/bin/bench_automorph
+
+info: Standard input is not a terminal, disabling listeners.
+Beginning simulation!
+src/sim/simulate.cc:199: info: Entering event queue @ 0.  Starting simulation...
+src/sim/syscall_emul.cc:97: warn: ignoring syscall set_robust_list(...)
+      (further warnings will be suppressed)
+src/sim/syscall_emul.hh:1117: warn: readlink() called on '/proc/self/exe' may yield unexpected results in various settings.
+      Returning '/home/derleere/NTT-RVV-project/automorph/bin/bench_automorph'
+src/sim/mem_state.cc:448: info: Increasing stack size by one page.
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+bench_automorph: VLEN=512, BENCH_REPS=5
+  columns: scalar / naive_rvv / automorph_rvv (cycles, best-of-5)
+
+=== N=4096   (R=8, C=512, stride=4096 bytes) ===
+  k=1       scalar=  86032  naive=[OK]   2103  rvv=[OK]   2619  speedup=32.8x
+  k=3       scalar=  86031  naive=[OK]  32166  rvv=[OK]   2637  speedup=32.6x
+  k=7       scalar=  86031  naive=[OK]  40753  rvv=[OK]   2639  speedup=32.5x
+  k=31      scalar=  86031  naive=[OK]  35556  rvv=[OK]   2617  speedup=32.8x
+  k=257     scalar=  86031  naive=[OK]  44372  rvv=[OK]   2624  speedup=32.7x
+  k=4095    scalar=  86031  naive=[OK]  47176  rvv=[OK]   2623  speedup=32.7x
+
+=== N=8192   (R=8, C=1024, stride=8192 bytes) ===
+  k=1       scalar= 172047  naive=[OK]   5876  rvv=[OK]   7905  speedup=21.7x
+  k=3       scalar= 172047  naive=[OK]  35610  rvv=[OK]   7803  speedup=22.0x
+  k=7       scalar= 172047  naive=[OK]  44180  rvv=[OK]   8686  speedup=19.8x
+  k=31      scalar= 172047  naive=[OK]  84433  rvv=[OK]   8191  speedup=21.0x
+  k=257     scalar= 172047  naive=[OK]  94631  rvv=[OK]  11273  speedup=15.2x
+  k=8191    scalar= 172047  naive=[OK]  95777  rvv=[OK]   7279  speedup=23.6x
+
+=== N=16384  (R=8, C=2048, stride=16384 bytes) ===
+  k=1       scalar= 344079  naive=[OK]  12176  rvv=[OK]  20097  speedup=17.1x
+  k=3       scalar= 344079  naive=[OK] 132366  rvv=[OK]  25064  speedup=13.7x
+  k=7       scalar= 344079  naive=[OK] 140951  rvv=[OK]  37307  speedup=9.2x
+  k=31      scalar= 344079  naive=[OK] 180957  rvv=[OK]  65856  speedup=5.2x
+  k=257     scalar= 344079  naive=[OK] 191041  rvv=[OK]  60728  speedup=5.6x
+  k=16383   scalar= 344079  naive=[OK] 192419  rvv=[OK]  18653  speedup=18.4x
+
+=== N=32768  (R=8, C=4096, stride=32768 bytes) ===
+  k=1       scalar= 688143  naive=[OK]  24448  rvv=[OK]  38596  speedup=17.8x
+  k=3       scalar= 688143  naive=[OK] 144669  rvv=[OK]  57683  speedup=11.9x
+  k=7       scalar= 688143  naive=[OK] 333479  rvv=[OK] 101742  speedup=6.7x
+  k=31      scalar= 688143  naive=[OK] 373485  rvv=[OK] 211802  speedup=3.2x
+  k=257     scalar= 688143  naive=[OK] 383569  rvv=[OK] 206123  speedup=3.3x
+  k=32767   scalar= 688143  naive=[OK] 384947  rvv=[OK]  41923  speedup=16.4x
