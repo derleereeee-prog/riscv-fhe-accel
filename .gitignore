@@ -1,0 +1,27 @@
+# OpenFHE 源码和编译产物（体积太大，用文档记录 commit hash）
+openfhe-development/
+openfhe-install/
+openfhe-install-clang18/
+
+# 编译产物
+**/build/
+**/build-*/
+**/bin/
+**/*.o
+**/*.a
+**/*.so
+
+# Claude 本地配置
+.claude/
+
+# gem5 输出
+**/m5out/
+gem5-results/
+
+# Python 缓存
+**/__pycache__/
+**/*.pyc
+
+# 临时文件
+*.log
+*.tmp

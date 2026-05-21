@@ -1,0 +1,33 @@
+--- openfhe-development/src/core/include/math/hal/intnat/mubintvecnat.h
++++ openfhe-development/src/core/include/math/hal/intnat/mubintvecnat.h
+@@ -40,6 +40,9 @@
+ #include "math/hal/intnat/ubintnat.h"
+ #include "math/hal/vector.h"
+ 
++/* Barrett key-switching modmul — provided by barrett-rvv.o or barrett-scalar.o at link time */
++#include "math/hal/intnat/barrett_rvv.h"
++
+ #include "utils/blockAllocator/xvector.h"
+ #include "utils/exception.h"
+ #include "utils/inttypes.h"
+@@ -494,6 +497,20 @@
+         auto mv{m_modulus};
+ #ifdef NATIVEINT_BARRET_MOD
+         auto mu{m_modulus.ComputeMu()};
++        /* Barrett key-switching hot path: resolved to RVV or scalar at link time */
++        if constexpr (std::is_same_v<typename IntegerType::Integer, uint64_t> &&
++                      sizeof(IntegerType) == sizeof(uint64_t)) {
++            int64_t n{mv.GetMSB() - 2};
++            if (n + 7 < 64) {
++                uint64_t*       ap = &m_data[0].m_value;
++                const uint64_t* bp = &b.m_data[0].m_value;
++                barrett_mul_rvv_u64m1(ap, bp, ap, size,
++                                      mv.m_value, mu.m_value,
++                                      (int)n, (int)(n + 7),
++                                      (int)(64 - n), (int)(57 - n));
++                return *this;
++            }
++        }
+         for (size_t i = 0; i < size; ++i)
+             m_data[i].ModMulFastEq(b[i], mv, mu);
+ #else
